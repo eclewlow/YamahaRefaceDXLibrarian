@@ -52,10 +52,10 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
     public:
     
     
-//    Public Member Functions
-//    virtual     ~DragAndDropTarget ()=default
-//         Destructor.
-//     
+    //    Public Member Functions
+    //    virtual     ~DragAndDropTarget ()=default
+    //         Destructor.
+    //
     bool isInterestedInDragSource (const SourceDetails &dragSourceDetails) {
         //         Callback to check whether this target is interested in the type of object being dragged.
         //
@@ -77,26 +77,26 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
         //         Callback to indicate that the user has dropped something onto this component.
         //
         printf("item dropped\n");
-//        dragSourceDetails.sourceComponent
+        //        dragSourceDetails.sourceComponent
         table.updateContent();
-//        table.
-//        DBG(dragSourceDetails.sourceComponent.toString());
-
+        //        table.
+        //        DBG(dragSourceDetails.sourceComponent.toString());
+        
         DBG(dragSourceDetails.description.toString());
     }
     bool shouldDrawDragImageWhenOver () {
         //         Overriding this allows the target to tell the drag container whether to draw the drag image while the cursor is over it.
         return true;
     }
-     
-
     
     
     
-//    Public Member Functions
-//    virtual     ~FileDragAndDropTarget ()=default
-//         Destructor.
-//     
+    
+    
+    //    Public Member Functions
+    //    virtual     ~FileDragAndDropTarget ()=default
+    //         Destructor.
+    //
     bool isInterestedInFileDrag (const juce::StringArray &files) override {
         //         Callback to check whether this target is interested in the set of files being offered.
         //
@@ -118,7 +118,7 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
         //         Callback to indicate that the user has dropped the files onto this component.
         printf("file dropped\n");
     }
-
+    
     juce::var getDragSourceDescription (const juce::SparseSet<int>& currentlySelectedRows) override
     {
         printf("test\n");
@@ -126,7 +126,7 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
             juce::Range<int> r = currentlySelectedRows.getRange(i);
             DBG(r.getStart() << " + " << r.getEnd());
         }
-//        DBG(currentlySelectedRows);
+        //        DBG(currentlySelectedRows);
         return {"whatever"};
     }
     TableTutorialComponent()
@@ -167,16 +167,112 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
                                      | juce::FileBrowserComponent::canSelectFiles,
                                      callback);
         } else {
-//            auto xmlFile = juce::File(BinaryData::TableData_xml);
-//            BinaryData::
-//            loadData (xmlFile);                                             // [1]
+            //            auto xmlFile = juce::File(BinaryData::TableData_xml);
+            //            BinaryData::
+            //            loadData (xmlFile);                                             // [1]
+            for(int i = 0; i < BinaryData::RefaceDX_syxSize; i++)
+            {
+                DBG(juce::String::toHexString((void*)&BinaryData::RefaceDX_syx[i], 1));
+            }
+            
+            // [1]
+            int sum = 0;
+            //https://yamahamusicians.com/forum/viewtopic.php?t=6864
+            for(int i = 7; i < 13 - 2; i++)
+            {
+                sum += BinaryData::RefaceDX_syx[i];
+            }
+            
+            int checksum = (~sum + 1) & 0x7F;
+            
+            if(checksum == BinaryData::RefaceDX_syx[11]) {
+                DBG("checksum calculated successfully!");
+            } else {
+                DBG("checksum calculation failed!");
+            }
+            
+            juce::String wholeSyx = juce::String::toHexString((void*)BinaryData::RefaceDX_syx, 241);
+            
+            // 1 patch = 13 + 51 + 41 * 4 + 13 = 241
+            DBG(wholeSyx);
+            
             tutorialData = juce::XmlDocument::parse (BinaryData::TableData_xml);            // [3]
+            
+            /*
+             
+             there are two different types of sysex to verify
+             1 is the edit buffer sysex, which only contains info for 1 complete sound
+             2 is the bank/patch sysex, which contains anywhere from 1 to 32 sounds
+             we need to detect and check the validity of both of these data types
+             we need to 1:
+             - check for header to determine sysex type, and then check footer to confirm sysex type
+                - if type 1 is found, then the program should only read up to one patch
+                - if type 2 is found, the program should check the entire file, it should check iteratively:
+                    - for a header and matching footer
+                    - for voice and 4 operator, that each parameter data type lies within data range.
+                    - lastly, after all patches are validated, that no two patches have the same bank/patch number associated
+             RULES:
+             - file must be a multiple of 241. Not including 0
+             - every 241 bytes, starting at by 241*n+0, a header must be found that matches the pattern:
+                            F0 43 00 7F 1C 00 04 05 0E 0F 00 5E F7
+                            F0 43 00 7F 1C 00 04 05 0E 00 00 6D F7
+                    verify the first 7 bytes equals above.  yes byte count for the header should always be 00 04
+                    verify that byte index 7 is 05 - always
+                    verify that byte index 8 is 0E - always
+                    read bytes 9 and 10 (9<<8 | 10).
+                        if n == 3840 or n[9]==0Fh && n[10] == 00h,
+                            then the patch is an edit buffer (question: should we allow multiple edit buffer patches in single sysex?
+                        elif n < 32 && n >= 0
+                            then the patch is a bank/prog
+                    verify the checksum at byte index 11
+                    verify byte index 12 is F7 - always
+                    n++
+                    
+                    
+             
+             0 - F0H - exclusive status
+             1 - 43H - YAHAMA ID
+             2 - 00H - Device Number
+             3 - 7FH - Group number HIGH
+             
+             4 - 1CH - Group number LOW
+             5 - xxH - BYTE COUNT HIGH
+             6 - xxH - BYTE COUNT LOW
+             7 - 05H - Model Number
+             
+             8 - xxH - Address HIGH
+             9 - xxH - Address MID
+             10 -xxH - address LOW
+             
+             11 -xxH - checksum
+             12 -F7H - end of exclusive
+             
+             */
+            // bulk header for edit buffer is  is F0 43 00 7F 1C 00 04 05 0E 0F 00 5E F7
+            // byte count is 04
+            // BinaryData::RefaceDX_syx[5] == 0 && BinaryData::RefaceDX_syx[6] == 4
+            // total first 13 bytes is "F043007F1C0004050E0F005EF7"
+            // String.indexOfChar("F043007F1C0004050E0F005EF7") == 0
+            // BinaryData::RefaceDX_syxSize == 241
+            // String.indexOfChar("F043007F1C0004050E0F005EF7") == 0
+            // String.indexOfChar("F043007F1C0004050F0F005DF7") == 0
+            
+            
+            // bulk header for bank 0 patch 0 is  F0 43 00 7F 1C 00 04 05 0E 00 00 6D F7
+            // byte count is 04
+            
+            //            Byte Count shows the size of data in blocks from Model ID onward (up to but not including the checksum).
+            //            The Check sum is the value that results in a value of 0 for the lower 7 bits when the Model ID, Start Address,
+            //            Data and Check sum itself are added.
+            
+            
+            
             
             dataList   = tutorialData->getChildByName ("DATA");
             columnList = tutorialData->getChildByName ("HEADERS");          // [4]
             
             numRows = dataList->getNumChildElements();                      // [5]
-
+            
             addAndMakeVisible (table);                                                  // [1]
             
             table.setColour (juce::ListBox::outlineColourId, juce::Colours::grey);      // [2]
@@ -454,6 +550,91 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TableTutorialComponent)
 };
 
+
+//==============================================================================
+void showBubbleMessage (juce::Component& targetComponent, const juce::String& textToShow,
+                        std::unique_ptr<juce::BubbleMessageComponent>& bmc,
+                        bool isRunningComponentTransformDemo)
+{
+    bmc.reset (new juce::BubbleMessageComponent());
+
+    if (isRunningComponentTransformDemo)
+    {
+//        targetComponent.findParentComponentOfClass<WidgetsDemo>()->addChildComponent (bmc.get());
+    }
+    else if (juce::Desktop::canUseSemiTransparentWindows())
+    {
+        bmc->setAlwaysOnTop (true);
+        bmc->addToDesktop (0);
+    }
+    else
+    {
+        targetComponent.getTopLevelComponent()->addChildComponent (bmc.get());
+    }
+
+    juce::AttributedString text (textToShow);
+    text.setJustification (juce::Justification::centred);
+    text.setColour (targetComponent.findColour (juce::TextButton::textColourOffId));
+
+    bmc->showAt (&targetComponent, text, 2000, true, false);
+}
+
+
+class DemoTabbedComponent : public juce::TabbedComponent
+{
+    public:
+    DemoTabbedComponent (): TabbedComponent (juce::TabbedButtonBar::TabsAtTop)
+    {
+        auto colour = findColour (juce::ResizableWindow::backgroundColourId);
+
+        addTab ("Buttons",     colour, new TableTutorialComponent(), true);
+        addTab ("Sliders",     colour, new TableTutorialComponent(), true);
+        addTab ("Toolbars",    colour, new TableTutorialComponent(), true);
+        addTab ("Misc",        colour, new TableTutorialComponent(), true);
+        addTab ("Menus",       colour, new TableTutorialComponent(), true);
+        addTab ("Tables",      colour, new TableTutorialComponent(), true);
+        addTab ("Drag & Drop", colour, new TableTutorialComponent(), true);
+
+        getTabbedButtonBar().getTabButton(5)->setExtraComponent(new CustomTabButton(),juce::TabBarButton::afterText);
+    }
+
+    // This is a small star button that is put inside one of the tabs. You can
+    // use this technique to create things like "close tab" buttons, etc.
+    class CustomTabButton final : public Component
+    {
+    public:
+        CustomTabButton()
+        {
+            setSize (20, 20);
+        }
+
+        void paint (juce::Graphics& g) override
+        {
+            juce::Path star;
+            star.addStar ({}, 7, 1.0f, 2.0f);
+
+            g.setColour (juce::Colours::green);
+            g.fillPath (star, star.getTransformToScaleToFit (getLocalBounds().reduced (2).toFloat(), true));
+        }
+
+        void mouseDown (const juce::MouseEvent&) override
+        {
+            showBubbleMessage (*this,
+                               "This is a custom tab component\n"
+                               "\n"
+                               "You can use these to implement things like close-buttons "
+                               "or status displays for your tabs.",
+                               bubbleMessage,
+                               false);
+        }
+    private:
+        bool runningComponentTransformsDemo;
+        std::unique_ptr<juce::BubbleMessageComponent> bubbleMessage;
+    };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoTabbedComponent)
+};
+
 //==============================================================================
 class MainComponent   : public juce::Component
 {
@@ -461,7 +642,8 @@ class MainComponent   : public juce::Component
     //==============================================================================
     MainComponent()
     {
-        addAndMakeVisible (table);
+//        addAndMakeVisible (table);
+        addAndMakeVisible(tabbed);
         
         setSize (1200, 600);
     }
@@ -473,12 +655,14 @@ class MainComponent   : public juce::Component
     
     void resized() override
     {
-        table.setBounds (getLocalBounds());
+//        table.setBounds (getLocalBounds());
+        tabbed.setBounds (getLocalBounds());
     }
     
     private:
     //==============================================================================
     TableTutorialComponent table;
+    DemoTabbedComponent tabbed;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -8,11 +8,17 @@
 
 namespace BinaryData
 {
+    extern const char*   Reface_novo_syx;
+    const int            Reface_novo_syxSize = 7712;
+
+    extern const char*   RefaceDX_syx;
+    const int            RefaceDX_syxSize = 241;
+
     extern const char*   TableData_xml;
     const int            TableData_xmlSize = 5688;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 1;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
