@@ -8,7 +8,7 @@
 
 #include <JuceHeader.h>
 //#include "MainComponent.h"
-#include "TableListBoxTutorial.h"
+#include "MainComponent.h"
 
 //==============================================================================
 class YamahaRefaceDXLibrarianApplication  : public juce::JUCEApplication

@@ -9,12 +9,15 @@
       <FILE id="blpq1i" name="TableData.xml" compile="0" resource="1" file="Resources/TableData.xml"/>
     </GROUP>
     <GROUP id="{3C458A86-01D6-127E-4B55-93AC155A59E7}" name="Source">
+      <FILE id="AT68ze" name="Util.h" compile="0" resource="0" file="Source/Util.h"/>
+      <FILE id="CQPO9a" name="TabbedUI.h" compile="0" resource="0" file="Source/TabbedUI.h"/>
+      <FILE id="gzwXQG" name="SysexValidator.h" compile="0" resource="0"
+            file="Source/SysexValidator.h"/>
+      <FILE id="znWDlK" name="FrontPanelUI.h" compile="0" resource="0" file="Source/FrontPanelUI.h"/>
       <FILE id="p3Rclv" name="TableListBoxTutorial.h" compile="0" resource="0"
             file="Source/TableListBoxTutorial.h"/>
       <FILE id="d53A76" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="P6l56j" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="ZHU2W9" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
@@ -35,7 +38,8 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="YamahaRefaceDXLibrarian"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="YamahaRefaceDXLibrarian"
+                       defines="JUCE_MODAL_LOOPS_PERMITTED=1"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="YamahaRefaceDXLibrarian"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

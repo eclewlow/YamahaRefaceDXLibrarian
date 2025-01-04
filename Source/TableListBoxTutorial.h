@@ -167,35 +167,6 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
                                      | juce::FileBrowserComponent::canSelectFiles,
                                      callback);
         } else {
-            //            auto xmlFile = juce::File(BinaryData::TableData_xml);
-            //            BinaryData::
-            //            loadData (xmlFile);                                             // [1]
-            for(int i = 0; i < BinaryData::RefaceDX_syxSize; i++)
-            {
-                DBG(juce::String::toHexString((void*)&BinaryData::RefaceDX_syx[i], 1));
-            }
-            
-            // [1]
-            int sum = 0;
-            //https://yamahamusicians.com/forum/viewtopic.php?t=6864
-            for(int i = 7; i < 13 - 2; i++)
-            {
-                sum += BinaryData::RefaceDX_syx[i];
-            }
-            
-            int checksum = (~sum + 1) & 0x7F;
-            
-            if(checksum == BinaryData::RefaceDX_syx[11]) {
-                DBG("checksum calculated successfully!");
-            } else {
-                DBG("checksum calculation failed!");
-            }
-            
-            juce::String wholeSyx = juce::String::toHexString((void*)BinaryData::RefaceDX_syx, 241);
-            
-            // 1 patch = 13 + 51 + 41 * 4 + 13 = 241
-            DBG(wholeSyx);
-            
             tutorialData = juce::XmlDocument::parse (BinaryData::TableData_xml);            // [3]
             
             /*
@@ -206,29 +177,29 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
              we need to detect and check the validity of both of these data types
              we need to 1:
              - check for header to determine sysex type, and then check footer to confirm sysex type
-                - if type 1 is found, then the program should only read up to one patch
-                - if type 2 is found, the program should check the entire file, it should check iteratively:
-                    - for a header and matching footer
-                    - for voice and 4 operator, that each parameter data type lies within data range.
-                    - lastly, after all patches are validated, that no two patches have the same bank/patch number associated
+             - if type 1 is found, then the program should only read up to one patch
+             - if type 2 is found, the program should check the entire file, it should check iteratively:
+             - for a header and matching footer
+             - for voice and 4 operator, that each parameter data type lies within data range.
+             - lastly, after all patches are validated, that no two patches have the same bank/patch number associated
              RULES:
              - file must be a multiple of 241. Not including 0
              - every 241 bytes, starting at by 241*n+0, a header must be found that matches the pattern:
-                            F0 43 00 7F 1C 00 04 05 0E 0F 00 5E F7
-                            F0 43 00 7F 1C 00 04 05 0E 00 00 6D F7
-                    verify the first 7 bytes equals above.  yes byte count for the header should always be 00 04
-                    verify that byte index 7 is 05 - always
-                    verify that byte index 8 is 0E - always
-                    read bytes 9 and 10 (9<<8 | 10).
-                        if n == 3840 or n[9]==0Fh && n[10] == 00h,
-                            then the patch is an edit buffer (question: should we allow multiple edit buffer patches in single sysex?
-                        elif n < 32 && n >= 0
-                            then the patch is a bank/prog
-                    verify the checksum at byte index 11
-                    verify byte index 12 is F7 - always
-                    n++
-                    
-                    
+             F0 43 00 7F 1C 00 04 05 0E 0F 00 5E F7
+             F0 43 00 7F 1C 00 04 05 0E 00 00 6D F7
+             verify the first 7 bytes equals above.  yes byte count for the header should always be 00 04
+             verify that byte index 7 is 05 - always
+             verify that byte index 8 is 0E - always
+             read bytes 9 and 10 (9<<8 | 10).
+             if n == 3840 or n[9]==0Fh && n[10] == 00h,
+             then the patch is an edit buffer (question: should we allow multiple edit buffer patches in single sysex?
+             elif n < 32 && n >= 0
+             then the patch is a bank/prog
+             verify the checksum at byte index 11
+             verify byte index 12 is F7 - always
+             n++
+             
+             
              
              0 - F0H - exclusive status
              1 - 43H - YAHAMA ID
@@ -551,118 +522,3 @@ public juce::TableListBoxModel, public juce::DragAndDropContainer, public juce::
 };
 
 
-//==============================================================================
-void showBubbleMessage (juce::Component& targetComponent, const juce::String& textToShow,
-                        std::unique_ptr<juce::BubbleMessageComponent>& bmc,
-                        bool isRunningComponentTransformDemo)
-{
-    bmc.reset (new juce::BubbleMessageComponent());
-
-    if (isRunningComponentTransformDemo)
-    {
-//        targetComponent.findParentComponentOfClass<WidgetsDemo>()->addChildComponent (bmc.get());
-    }
-    else if (juce::Desktop::canUseSemiTransparentWindows())
-    {
-        bmc->setAlwaysOnTop (true);
-        bmc->addToDesktop (0);
-    }
-    else
-    {
-        targetComponent.getTopLevelComponent()->addChildComponent (bmc.get());
-    }
-
-    juce::AttributedString text (textToShow);
-    text.setJustification (juce::Justification::centred);
-    text.setColour (targetComponent.findColour (juce::TextButton::textColourOffId));
-
-    bmc->showAt (&targetComponent, text, 2000, true, false);
-}
-
-
-class DemoTabbedComponent : public juce::TabbedComponent
-{
-    public:
-    DemoTabbedComponent (): TabbedComponent (juce::TabbedButtonBar::TabsAtTop)
-    {
-        auto colour = findColour (juce::ResizableWindow::backgroundColourId);
-
-        addTab ("Buttons",     colour, new TableTutorialComponent(), true);
-        addTab ("Sliders",     colour, new TableTutorialComponent(), true);
-        addTab ("Toolbars",    colour, new TableTutorialComponent(), true);
-        addTab ("Misc",        colour, new TableTutorialComponent(), true);
-        addTab ("Menus",       colour, new TableTutorialComponent(), true);
-        addTab ("Tables",      colour, new TableTutorialComponent(), true);
-        addTab ("Drag & Drop", colour, new TableTutorialComponent(), true);
-
-        getTabbedButtonBar().getTabButton(5)->setExtraComponent(new CustomTabButton(),juce::TabBarButton::afterText);
-    }
-
-    // This is a small star button that is put inside one of the tabs. You can
-    // use this technique to create things like "close tab" buttons, etc.
-    class CustomTabButton final : public Component
-    {
-    public:
-        CustomTabButton()
-        {
-            setSize (20, 20);
-        }
-
-        void paint (juce::Graphics& g) override
-        {
-            juce::Path star;
-            star.addStar ({}, 7, 1.0f, 2.0f);
-
-            g.setColour (juce::Colours::green);
-            g.fillPath (star, star.getTransformToScaleToFit (getLocalBounds().reduced (2).toFloat(), true));
-        }
-
-        void mouseDown (const juce::MouseEvent&) override
-        {
-            showBubbleMessage (*this,
-                               "This is a custom tab component\n"
-                               "\n"
-                               "You can use these to implement things like close-buttons "
-                               "or status displays for your tabs.",
-                               bubbleMessage,
-                               false);
-        }
-    private:
-        bool runningComponentTransformsDemo;
-        std::unique_ptr<juce::BubbleMessageComponent> bubbleMessage;
-    };
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DemoTabbedComponent)
-};
-
-//==============================================================================
-class MainComponent   : public juce::Component
-{
-    public:
-    //==============================================================================
-    MainComponent()
-    {
-//        addAndMakeVisible (table);
-        addAndMakeVisible(tabbed);
-        
-        setSize (1200, 600);
-    }
-    
-    void paint (juce::Graphics& g) override
-    {
-        g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-    }
-    
-    void resized() override
-    {
-//        table.setBounds (getLocalBounds());
-        tabbed.setBounds (getLocalBounds());
-    }
-    
-    private:
-    //==============================================================================
-    TableTutorialComponent table;
-    DemoTabbedComponent tabbed;
-    
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
-};
