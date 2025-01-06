@@ -14,11 +14,14 @@ namespace BinaryData
     extern const char*   RefaceDX_syx;
     const int            RefaceDX_syxSize = 241;
 
+    extern const char*   RefaceDXMIDI_xml;
+    const int            RefaceDXMIDI_xmlSize = 12622;
+
     extern const char*   TableData_xml;
     const int            TableData_xmlSize = 5688;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 3;
+    const int namedResourceListSize = 4;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -6,6 +6,8 @@
     <GROUP id="{BCC4F6C4-3CDC-E350-F8D0-1F33E4E82B50}" name="Resources">
       <FILE id="ehkHyh" name="Reface_novo.syx" compile="0" resource="1" file="Resources/Reface_novo.syx"/>
       <FILE id="zrcDTd" name="RefaceDX.syx" compile="0" resource="1" file="Resources/RefaceDX.syx"/>
+      <FILE id="BPi1oV" name="RefaceDXMIDI.xml" compile="0" resource="1"
+            file="Resources/RefaceDXMIDI.xml"/>
       <FILE id="blpq1i" name="TableData.xml" compile="0" resource="1" file="Resources/TableData.xml"/>
     </GROUP>
     <GROUP id="{3C458A86-01D6-127E-4B55-93AC155A59E7}" name="Source">

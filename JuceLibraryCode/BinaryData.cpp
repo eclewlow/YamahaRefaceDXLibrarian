@@ -105,8 +105,130 @@ static const unsigned char temp_binary_data_1[] =
 
 const char* RefaceDX_syx = (const char*) temp_binary_data_1;
 
-//================== TableData.xml ==================
+//================== RefaceDXMIDI.xml ==================
 static const unsigned char temp_binary_data_2[] =
+"<MIDI>\n"
+"    <VOICE>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"00\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 1\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"01\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 2\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"02\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 3\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"03\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 4\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"04\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 5\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"05\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 6\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"06\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 7\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"07\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 8\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"08\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 9\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"09\" SIZE=\"1\" DATA_RANGE=\"20-7E\" DATA_LOW=\"32\" DATA_HIGH=\"126\" DESCRIPTION=\"32 - 126 (ASCII)\" NAME=\"VOICE NAME 10\"></PARAMETER>\n"
+"        \n"
+"        <!-- reserved -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0A\" SIZE=\"1\" DATA_RANGE=\"\" DATA_LOW=\"\" DATA_HIGH=\"\" DESCRIPTION=\"\" NAME=\"reserved\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0B\" SIZE=\"1\" DATA_RANGE=\"\" DATA_LOW=\"\" DATA_HIGH=\"\" DESCRIPTION=\"\" NAME=\"reserved\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0C\" SIZE=\"1\" DATA_RANGE=\"28-58\" DATA_LOW=\"-24\" DATA_HIGH=\"24\" DESCRIPTION=\"-24 \xe2\x80\x93 +24 (semitones)\" NAME=\"Transpose (TP)\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0D\" SIZE=\"1\" DATA_RANGE=\"00-02\" DATA_LOW=\"0\" DATA_HIGH=\"2\" DESCRIPTION=\"poly (POLY), Mono-Full (MONO-FULL), Mono-Legato (MONO-LGATO)\" NAME=\"Part Mode\" NOTES=\"MONO-FULL: applied to all note"
+"s, MONO-LGATO: applied only to notes played legato\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0E\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"\" NAME=\"Portamento Time (PORTA)\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"0F\" SIZE=\"1\" DATA_RANGE=\"28-58\" DATA_LOW=\"-24\" DATA_HIGH=\"24\" DESCRIPTION=\"-24 \xe2\x80\x93 +24 (semitones)\" NAME=\"Pitch Bend Range (PB)\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"10\" SIZE=\"1\" DATA_RANGE=\"00-0B\" DATA_LOW=\"0\" DATA_HIGH=\"11\" DESCRIPTION=\"ALGO 1 \xe2\x80\x93 12\" NAME=\"Algorithm (ALGO)\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"11\" SIZE=\"1\" DATA_RANGE=\"00-06\" DATA_LOW=\"0\" DATA_HIGH=\"6\" DESCRIPTION=\"sine (SIN), triangle (TRI), sawtooth up (SAW U), sawtooth down (SAW D), square (SQ), sample & hold 8 (S&H8), sample & ho"
+"ld (S&H)\" NAME=\"LFO Wave (WAVE)\"></PARAMETER>\n"
+"        \n"
+"        <!-- LFO -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"12\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"LFO Speed (SPEED)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"13\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"LFO Delay (DELAY)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"14\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no LFO) \xe2\x80\x93 127 (max)\" NAME=\"LFO Pitch Modulation Depth (PMD)\"></PARAMETER>\n"
+"        \n"
+"        <!-- Pitch Env -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"15\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"Pitch EG Rate 1 (PITCH EG Rate)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"16\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"Pitch EG Rate 2 (PITCH EG Rate)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"17\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"Pitch EG Rate 3 (PITCH EG Rate)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"18\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"Pitch EG Rate 4 (PITCH EG Rate)\"></PARAMETER>\n"
+"        \n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"19\" SIZE=\"1\" DATA_RANGE=\"10-70\" DATA_LOW=\"-48\" DATA_HIGH=\"48\" DESCRIPTION=\"-48 (-4 octave) \xe2\x80\x93 +48 (+4 octave)\" NAME=\"Pitch EG Level 1 (PITCH EG Level)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1A\" SIZE=\"1\" DATA_RANGE=\"10-70\" DATA_LOW=\"-48\" DATA_HIGH=\"48\" DESCRIPTION=\"-48 (-4 octave) \xe2\x80\x93 +48 (+4 octave)\" NAME=\"Pitch EG Level 2 (PITCH EG Level)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1B\" SIZE=\"1\" DATA_RANGE=\"10-70\" DATA_LOW=\"-48\" DATA_HIGH=\"48\" DESCRIPTION=\"-48 (-4 octave) \xe2\x80\x93 +48 (+4 octave)\" NAME=\"Pitch EG Level 3 (PITCH EG Level)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1C\" SIZE=\"1\" DATA_RANGE=\"10-70\" DATA_LOW=\"-48\" DATA_HIGH=\"48\" DESCRIPTION=\"-48 (-4 octave) \xe2\x80\x93 +48 (+4 octave)\" NAME=\"Pitch EG Level 4 (PITCH EG Level)\"></PARAMETER>\n"
+"        \n"
+"        <!-- Effect 1 -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1D\" SIZE=\"1\" DATA_RANGE=\"00-07\" DATA_LOW=\"0\" DATA_HIGH=\"7\" DESCRIPTION=\"thru (THRU), distortion (DIST), touch wah (T.WAH), chorus (CHO), flanger (FLA), phaser (PHA), delay (DLY), reverb (REV)\""
+" NAME=\"Effect 1 Type\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1E\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"Effect 1 Parameter 1 (*Note)\" NOTES=\"DRIVE: distortion, SENS: touch wah, DEPTH: chorus, flanger, ph"
+"aser, delay, reverb\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"1F\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"Effect 1 Parameter 2 (*Note)\" NOTES=\"TONE: distortion, REZ: touch wah, RATE: chorus, flanger, phase"
+"r, TIME: delay, reverb\"></PARAMETER>\n"
+"        \n"
+"        <!-- Effect 2 -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"20\" SIZE=\"1\" DATA_RANGE=\"00-07\" DATA_LOW=\"0\" DATA_HIGH=\"7\" DESCRIPTION=\"thru (THRU), distortion (DIST), touch wah (T.WAH), chorus (CHO), flanger (FLA), phaser (PHA), delay (DLY), reverb (REV)\""
+" NAME=\"Effect 2 Type\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"21\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"Effect 2 Parameter 1 (*Note)\" NOTES=\"DRIVE: distortion, SENS: touch wah, DEPTH: chorus, flanger, ph"
+"aser, delay, reverb\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"22\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 - 127\" NAME=\"Effect 2 Parameter 2 (*Note)\" NOTES=\"TONE: distortion, REZ: touch wah, RATE: chorus, flanger, phase"
+"r, TIME: delay, reverb\"></PARAMETER>\n"
+"        \n"
+"        <!-- reserved -->\n"
+"        <PARAMETER HIGH=\"30\" MID=\"00\" LOW=\"23\" SIZE=\"3\" DATA_RANGE=\"\" DATA_LOW=\"\" DATA_HIGH=\"\" DESCRIPTION=\"\" NAME=\"reserved\"></PARAMETER>\n"
+"    </VOICE>\n"
+"    \n"
+"    <OPERATOR>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"00\" SIZE=\"1\" DATA_RANGE=\"00-01\" DATA_LOW=\"0\" DATA_HIGH=\"1\" DESCRIPTION=\"off, ON\" NAME=\"OP ON-OFF (OP)\"></PARAMETER>\n"
+"        \n"
+"        <!-- OP EG Rate -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"01\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"OP EG Rate 1\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"02\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"OP EG Rate 2\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"03\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"OP EG Rate 3\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"04\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (slow) \xe2\x80\x93 127 (fast)\" NAME=\"OP EG Rate 4\"></PARAMETER>\n"
+"        \n"
+"        <!-- OP EG Level -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"05\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no output) \xe2\x80\x93 127 (max)\" NAME=\"OP EG Level 1\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"06\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no output) \xe2\x80\x93 127 (max)\" NAME=\"OP EG Level 2\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"07\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no output) \xe2\x80\x93 127 (max)\" NAME=\"OP EG Level 3\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"08\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no output) \xe2\x80\x93 127 (max)\" NAME=\"OP EG Level 4\"></PARAMETER>\n"
+"        \n"
+"        <!-- Keyboard -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"09\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 \xe2\x80\x93 127\" NAME=\"OP EG Keyboard Rate Scaling (KSC-R)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0A\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (flat: no variation) \xe2\x80\x93 127 (max)\" NAME=\"OP Keyboard Level Scaling Left Depth (KSC-Level)\"></PARAMETER>"
+"\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0B\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (flat: no variation) \xe2\x80\x93 127 (max)\" NAME=\"OP Keyboard Level Scaling Right Depth (KSC-Level)\"></PARAMETER"
+">\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0C\" SIZE=\"1\" DATA_RANGE=\"00-03\" DATA_LOW=\"0\" DATA_HIGH=\"3\" DESCRIPTION=\"-linear (-LIN), -exponential (-EXP), +exponential (+EXP), +linear (+LIN)\" NAME=\"OP Keyboard Level Scaling Left Curve ("
+"KSC-Level)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0D\" SIZE=\"1\" DATA_RANGE=\"00-03\" DATA_LOW=\"0\" DATA_HIGH=\"3\" DESCRIPTION=\"-linear (-LIN), -exponential (-EXP), +exponential (+EXP), +linear (+LIN)\" NAME=\"OP Keyboard Level Scaling Right Curve "
+"(KSC-Level)\"></PARAMETER>\n"
+"        \n"
+"        <!-- LFO -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0E\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no amplitude) \xe2\x80\x93 127 (max)\" NAME=\"OP LFO AMD Depth (LFO AMD)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"0F\" SIZE=\"1\" DATA_RANGE=\"00-01\" DATA_LOW=\"0\" DATA_HIGH=\"1\" DESCRIPTION=\"off, ON\" NAME=\"OP LFO PMD ON/OFF (LFO PMD On/Off)\"></PARAMETER>\n"
+"        \n"
+"        <!-- Pitch EG -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"10\" SIZE=\"1\" DATA_RANGE=\"00-01\" DATA_LOW=\"0\" DATA_HIGH=\"1\" DESCRIPTION=\"off, ON\" NAME=\"OP PEG ON/OFF (PITCH EG On/Off)\"></PARAMETER>\n"
+"\n"
+"        <!-- OP Level -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"11\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 (no touch response) \xe2\x80\x93 127 (max)\" NAME=\"OP Level Velocity Sensitivity (VEL.S)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"12\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 \xe2\x80\x93 127\" NAME=\"OP Level Output Level (LEVEL)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"13\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"0\" DATA_HIGH=\"127\" DESCRIPTION=\"0 \xe2\x80\x93 127\" NAME=\"OP Level Feedback Level (FB)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"14\" SIZE=\"1\" DATA_RANGE=\"00-01\" DATA_LOW=\"0\" DATA_HIGH=\"1\" DESCRIPTION=\"sawtooth, square\" NAME=\"OP Level Feedback Type (FB)\"></PARAMETER>\n"
+"        \n"
+"        <!-- OP Freq -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"15\" SIZE=\"1\" DATA_RANGE=\"00-01\" DATA_LOW=\"0\" DATA_HIGH=\"1\" DESCRIPTION=\"frequency/ratio (Ratio), fixed freq/Hz (Fixed)\" NAME=\"OP Freq. Mode (MODE)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"16\" SIZE=\"1\" DATA_RANGE=\"00-1F\" DATA_LOW=\"1F\" DATA_HIGH=\"0\" DESCRIPTION=\"31\" NAME=\"OP Freq. Coarse (RATIO/FREQ)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"17\" SIZE=\"1\" DATA_RANGE=\"00-63\" DATA_LOW=\"0\" DATA_HIGH=\"99\" DESCRIPTION=\"\" NAME=\"OP Freq. Fine (RATIO/FREQ)\"></PARAMETER>\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"18\" SIZE=\"1\" DATA_RANGE=\"00-7F\" DATA_LOW=\"-64\" DATA_HIGH=\"63\" DESCRIPTION=\"-64 \xe2\x80\x93 +63\" NAME=\"OP Freq, Detune (DTUNE)\"></PARAMETER>\n"
+"        \n"
+"        <!-- reserved -->\n"
+"        <PARAMETER HIGH=\"31\" MID=\"op\" LOW=\"19\" SIZE=\"3\" DATA_RANGE=\"\" DATA_LOW=\"\" DATA_HIGH=\"\" DESCRIPTION=\"\" NAME=\"reserved\"></PARAMETER>\n"
+"    </OPERATOR>\n"
+"    \n"
+"</MIDI>\n";
+
+const char* RefaceDXMIDI_xml = (const char*) temp_binary_data_2;
+
+//================== TableData.xml ==================
+static const unsigned char temp_binary_data_3[] =
 "<TABLE_DATA>\n"
 "    <HEADERS>\n"
 "        <COLUMN columnId=\"1\" name=\"ID\" width=\"50\"/>\n"
@@ -159,7 +281,7 @@ static const unsigned char temp_binary_data_2[] =
 "    </DATA>\n"
 "</TABLE_DATA>\n";
 
-const char* TableData_xml = (const char*) temp_binary_data_2;
+const char* TableData_xml = (const char*) temp_binary_data_3;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -175,6 +297,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
     {
         case 0x3456b97c:  numBytes = 7712; return Reface_novo_syx;
         case 0x3c4ae7d7:  numBytes = 241; return RefaceDX_syx;
+        case 0x71e019bd:  numBytes = 12622; return RefaceDXMIDI_xml;
         case 0x29582bd0:  numBytes = 5688; return TableData_xml;
         default: break;
     }
@@ -187,6 +310,7 @@ const char* namedResourceList[] =
 {
     "Reface_novo_syx",
     "RefaceDX_syx",
+    "RefaceDXMIDI_xml",
     "TableData_xml"
 };
 
@@ -194,6 +318,7 @@ const char* originalFilenames[] =
 {
     "Reface_novo.syx",
     "RefaceDX.syx",
+    "RefaceDXMIDI.xml",
     "TableData.xml"
 };
 

@@ -90,6 +90,52 @@ class SysexValidator   : public juce::Component, public juce::FileDragAndDropTar
         return true;
     }
     
+    bool validateVoiceData(char* data) {
+
+        if(!juce::String::toHexString(data, 11).equalsIgnoreCase("F0 43 00 7F 1C 00 2A 05 30 00 00")) {
+            showError("Malformed Yamaha sysex. Voice data was found, but the voice data was malformed.");
+            throw "Malformed Yamaha sysex. Voice data was found, but the voice data was malformed.";
+        }
+        
+        // validate voice data falls within bounds
+        
+        validateChecksum(data, 51);
+        
+        // validate ends with F7
+        if(data[50] != 0xF7) {
+            showError("Malformed Yamaha sysex. Voice data was found, but the voice data was malformed.");
+            throw "Malformed Yamaha sysex. Voice data was found, but the voice data was malformed.";
+        }
+
+        return true;
+    }
+
+    bool validateOperatorData(char* data, int op) {
+
+        if(!juce::String::toHexString(data, 11).matchesWildcard("F0 43 00 7F 1C 00 20 05 31 ?? 00", true)) {
+            showError("Malformed Yamaha sysex. Edit buffer data was found, but the voice header data was malformed.");
+            throw "Malformed Yamaha sysex. Edit buffer data was found, but the voice header data was malformed.";
+        }
+        
+        if(data[9] != op) {
+            showError("Malformed Yamaha sysex. Operator data was found, but the operator data was malformed.");
+            throw "Malformed Yamaha sysex. Operator data was found, but the operator data was malformed.";
+        }
+        
+        // validate operator data falls within bounds
+
+        
+        validateChecksum(data, 41);
+        
+        // validate ends with F7
+        if(data[40] != 0xF7) {
+            showError("Malformed Yamaha sysex. Operator data was found, but the operator data was malformed.");
+            throw "Malformed Yamaha sysex. Operator data was found, but the operator data was malformed.";
+        }
+
+        return true;
+    }
+
     bool validate(juce::File f) {
 
         if (! f.existsAsFile()) // [1]
@@ -131,12 +177,13 @@ class SysexValidator   : public juce::Component, public juce::FileDragAndDropTar
                 validateChecksum(&data[i + 241 - 13], 13);
 
                 // assert voice data
-                if(!juce::String::toHexString(&data[i + 13], 11).equalsIgnoreCase("F0 43 00 7F 1C 00 2A 05 30 00 00")) {
-                    showError("Malformed Yamaha sysex. Edit buffer data was found, but the voice data was malformed.");
-                    throw "Malformed Yamaha sysex. Edit buffer data was found, but the voice data was malformed.";
-                }
+                validateVoiceData(&data[i + 13]);
+                // validate operator 1 data
+                validateOperatorData(&data[i + 13 + 51 + 41 * 0], 0);
+                validateOperatorData(&data[i + 13 + 51 + 41 * 1], 1);
+                validateOperatorData(&data[i + 13 + 51 + 41 * 2], 2);
+                validateOperatorData(&data[i + 13 + 51 + 41 * 3], 3);
 
-                validateChecksum(&data[i + 13], 51);
 
                 //
                 DBG("successfully parsed edit buffer sysex!");
